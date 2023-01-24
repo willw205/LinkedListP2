@@ -1,8 +1,12 @@
- //Creator: Emily Yarvis
- //Date: 1/17/23
- //Node Class
 
+ //Written By: Emily Yarvis
+ //Date: 1/17/24
+ //Body of the Node Class
+
+ #include<iostream>
  #include "Node.h"
+
+ using namespace std;
 
  Node::Node(Student* newStudent) {
    theStudent = newStudent;
@@ -10,11 +14,11 @@
  }
 
  Node::~Node() {
-   delete theStudent;
+   delete(theStudent);
    next = NULL;
  }
-
  void Node::setNext(Node* nextNode) {
+
 
    next = nextNode;
  }
@@ -24,8 +28,18 @@
    return next;
  }
 
- Student* Node::getStudent() {
-   return student;
+ void Node::setPrevious(Node* previousNode) {
+   previous = previousNode;
+ } 
+
+ Node* Node::getPrevious() {
+   return previous;
  }
 
- 
+ Student* Node::getStudent() {
+   return theStudent;
+ }
+
+
+
+

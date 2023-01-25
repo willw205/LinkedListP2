@@ -12,6 +12,11 @@
 
  //Defining the functions
 
+ void ADD(Node* &head, Node* &current, Student* newStudent);
+ void PRINT(Node* head, Node* next);
+ void DELETE(Node* head, Node* &current, int id);
+ void AVERAGE(Node* head);
+
 
  int main() {
 
@@ -28,7 +33,7 @@
       cin >> input;
       
       if(strcmp(input, "PRINT") == 0){
-
+        PRINT(head, head);
       }
       else if(strcmp(input, "ADD") == 0){ //New student is created below
        
@@ -48,10 +53,12 @@
        cout << "Please Enter ID to Remove: " << endl;
        int id;
        cin >> id;
+       DELETE(head, head, id);
 
      }
      else if(strcmp(input, "AVERAGE") == 0){
        //Helps to average all the GPAS
+       AVERAGE(head);
 
      }
      else if(strcmp(input, "QUIT") == 0){
@@ -99,3 +106,78 @@
    }
  }
 
+ //Below helps to print the list
+
+ void PRINT(Node* head,Node* next){
+   if(next == head){
+     cout << "Students: " << endl;
+   }
+   //All the information of the students are printed out!
+   if(next != NULL){
+     cout << next->getStudent()->getFirstName() << " " << next->getStudent()->getLastName() << " " << *(next->getStudent()->getID()) << " " << fixed << setprecision(2) << *(next->getStudent()->getGPA()) << endl;
+     PRINT(head,next->getNext());
+   }
+ }
+
+ //Below helps to delete node from list
+
+ void DELETE(Node* head,Node* &current, int id){
+   //Checks if there is an empty list
+   if(head == NULL){
+     cout<< "No students as of now!"<<endl;
+   }
+   else if(head == current && id == *(current->getStudent()->getID())){
+     //Checks if first student
+     cout << "Deleting numero uno Studente!" << endl;
+     Node* createHead = current->getNext();
+     current->~Node();
+     current = createHead;
+   }
+   else if(current->getNext() == NULL){
+     //Checks if at end of the list
+     cout << "No ID Found!" << endl;
+   }
+   else if(*(current->getNext()->getStudent()->getID()) == id){
+     //Makes sure to check for the same ID
+     cout << "beep... beep... deleting the student: " << *(current->getNext()->getStudent()->getID()) << endl;
+     Node* nextN = current->getNext()->getNext();
+     current->getNext()->~Node();
+     current->setNext(nextN);
+   }
+   else{
+     //Keeps on recursing!
+     Node* next = current->getNext();
+     DELETE(head, next, id);
+   }
+ }
+
+ //Below to average the gpas
+
+ void AVERAGE(Node* head){
+   Node* current = head;
+   float sum = 0;
+   float counter = 0;
+   //Checks if no students
+   if(head == NULL){
+     cout <<"No Students as of Now!" << endl;
+   }
+   else{
+     //Checks if still not at end of list
+     while(current->getNext() != NULL){
+       sum+=*(current->getStudent()->getGPA());
+       counter++;
+       current=current->getNext();
+     }
+
+     //Helps to put in the last on list
+   
+     sum+=*(current->getStudent()->getGPA());
+     counter++;
+
+     //Helps to provide our answers!
+     
+     float avg = sum/counter;
+     
+     cout <<"The Average GPA: " << fixed << setprecision(2) << avg << endl;
+   } 
+  }

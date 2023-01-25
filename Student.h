@@ -1,4 +1,3 @@
-
  #ifndef STUDENT_H
  #define STUDENT_H
 
@@ -8,6 +7,8 @@
 
  class Student{
 
+  //Below public are the function prototypes
+   
   public:
    void setFirstName(const char* newFirst);
    void	setLastName(const char* newLast);
@@ -17,6 +18,8 @@
    char*getLastName();
    int* getID();
    float* getGPA();
+
+  //Below private are the initialization of names, id, and gpa
 
   private:
    char firstName[100];

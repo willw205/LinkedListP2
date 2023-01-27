@@ -16,6 +16,7 @@
  void PRINT(Node* head, Node* next);
  void DELETE(Node* head, Node* &current, int id);
  void AVERAGE(Node* head);
+ void averageTakeIn(Node* current, double&sum, int & count);
 
 
  int main() {
@@ -151,33 +152,39 @@
    }
  }
 
- //Below to average the gpas
+ //Below helps to average GPA
 
- void AVERAGE(Node* head){
-   Node* current = head;
-   float sum = 0;
-   float counter = 0;
-   //Checks if no students
-   if(head == NULL){
-     cout <<"No Students as of Now!" << endl;
+ void AVERAGE(Node* head) {
+
+   if (head == NULL) {
+     cout << "No students as of Now!" << endl;
+     return;
    }
-   else{
-     //Checks if still not at end of list
-     while(current->getNext() != NULL){
-       sum+=*(current->getStudent()->getGPA());
-       counter++;
-       current=current->getNext();
-     }
 
-     //Helps to put in the last on list
+   //Initializing variable 
    
-     sum+=*(current->getStudent()->getGPA());
-     counter++;
+   double sum = *(head->getStudent()->getGPA());
+   int count = 1;
 
-     //Helps to provide our answers!
-     
-     float avg = sum/counter;
-     
-     cout <<"The Average GPA: " << fixed << setprecision(2) << avg << endl;
-   } 
-  }
+   //Below passes the next node in list as references
+   
+   averageTakeIn(head->getNext(), sum, count);
+   cout << fixed << setprecision(2) << "The AVERAGE GPA: " << sum / count << endl;
+   
+ }
+
+ //Recursive Function Below
+
+ void averageTakeIn(Node* current, double &sum, int &count) {
+
+   if (current == NULL) {
+   return;
+   }
+
+   //Adss gpa of student at Node to sum variable
+   
+   sum += *(current->getStudent()->getGPA());
+   count++;
+   averageTakeIn(current->getNext(), sum, count);
+   
+}
